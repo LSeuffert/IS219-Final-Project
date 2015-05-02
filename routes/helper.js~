@@ -1,0 +1,27 @@
+var helper = {};
+
+/**
+ * Description: 
+ **/
+helper.uploadFile = function(req, res, Schema, redir, callback) {
+    // parse csv file
+    var parser = csv.parse({columns: true})
+    req.pipe(req.busboy)
+
+    // upload file
+    req.busboy.on('file', function(fieldname, file, filename) {
+        console.log('Uploading: ' + filename)
+        
+        // save in database
+        file.pipe(parser).on('readable', function() {
+            while (record = parser.read()) {
+		callback(record, Schema)
+            }
+        })
+    }).on('finish', function() {
+        console.log('file uploaded')
+        res.redirect('/upload/' + redir)
+    })
+}
+
+module.exports = helper;

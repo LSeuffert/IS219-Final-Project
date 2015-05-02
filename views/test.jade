@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title= title
+  body
+    - var list = [];
+    each val in rec
+      - list.push(val.y2013.total)
+    script.
+      console.log(#{list[9]})
+      

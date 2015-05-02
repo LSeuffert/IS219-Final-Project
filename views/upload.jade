@@ -1,0 +1,8 @@
+doctype html
+html
+  head
+    title= title
+  body
+    form(action="/fileupload/#{route}", method="post", enctype="multipart/form-data")
+      input(type="file", name="file")
+      input(type="submit", value="Upload")

@@ -1,0 +1,9 @@
+doctype html
+html
+  head
+    title= title
+  body
+    ul
+      each value, key in rec
+        li
+          a(href="/#{route}/#{value._id}") #{value.name}
