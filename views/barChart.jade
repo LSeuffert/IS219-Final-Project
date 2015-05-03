@@ -11,7 +11,6 @@ html
       }
   body
     #wrapper
-      | &#x9;
       script(src='http://d3js.org/d3.v3.min.js', charset='utf=8')
       script.
         var categories= ['', '#{names[0]}', '#{names[1]}', '#{names[2]}', '#{names[3]}', '#{names[4]}', '#{names[5]}', '#{names[6]}', '#{names[7]}', '#{names[8]}', '#{names[9]}'];
@@ -35,10 +34,10 @@ html
           .range(colors);
           var canvas = d3.select('#wrapper')
           .append('svg')
-          .attr({'width':900,'height':550});
+          .attr({'width':950,'height':550});
           var grids = canvas.append('g')
           .attr('id','grid')
-          .attr('transform','translate(150,10)')
+          .attr('transform','translate(200,10)')
           .selectAll('line')
           .data(grid)
           .enter()
@@ -62,15 +61,15 @@ html
           .tickFormat(function(d,i){ return categories[i]; })
           .tickValues(d3.range(17));
           var y_xis = canvas.append('g')
-          .attr("transform", "translate(151,0)")
+          .attr("transform", "translate(201,0)")
           .attr('id','yaxis')
           .call(yAxis);
           var x_xis = canvas.append('g')
-          .attr("transform", "translate(150,480)")
+          .attr("transform", "translate(200,480)")
           .attr('id','xaxis')
           .call(xAxis);
           var chart = canvas.append('g')
-          .attr("transform", "translate(150,15)")
+          .attr("transform", "translate(200,15)")
           .attr('id','bars')
           .selectAll('rect')
           .data(dollars)
@@ -90,5 +89,5 @@ html
           .data(dollars)
           .enter()
           .append('text')
-          .attr({'x':function(d) {return xscale(d)-200; },'y':function(d,i){ return yscale(i)+35; }})
+          .attr({'x':function(d) {return xscale(d)-100; },'y':function(d,i){ return yscale(i)+35; }})
           .text(function(d){ return d; }).style({'fill':'#fff','font-size':'14px'});

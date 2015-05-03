@@ -30,8 +30,8 @@ html
       r = 100,                            //radius
       color = d3.scale.category20c();     //builtin range of colors
   
-      data = [{"label":"Female", "value": #{rec.female}}, 
-              {"label":"Male", "value": #{rec.male}}]
+      data = [{"label":"Female #{percent.female}", "value": #{rec.female}}, 
+              {"label":"Male #{percent.male}", "value": #{rec.male}}]
       
       var vis = d3.select("body")
           .append("svg:svg")              

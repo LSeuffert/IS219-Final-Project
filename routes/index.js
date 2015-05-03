@@ -80,12 +80,19 @@ router.get('/gender_distribution/:year/:id', function(req, res) {
 	{},
 	function(err, record) {
 	    // find relevant year document
-	    var year_record = record['y' + req.params.id];
+	    var year_record = record['y' + req.params.year];
+
+	    // get percents
+	    var percent = {};
+	    percent.male = Math.round((year_record.male/year_record.total)*1000)/10 + '%';
+	    percent.female = Math.round((year_record.female/year_record.total)*1000)/10 + '%';
+	    console.log(year_record)
 
 	    // render page
 	    res.render('pieGraph', {
 		title: 'Gender Distribution | Pie Graph',
-		rec: year_record
+		rec: year_record,
+		percent: percent
 	    })
 	}
     )
@@ -104,12 +111,13 @@ router.get('/gender_distribution/:year', function(req, res) {
     var year = req.params.year;
     var query = {};
 
-    query[year + '.enroll'] = true;
+    query['y' + year + '.enroll'] = true;
 
     University.find(
 	query,
 	{},
 	function (err, list) {
+	    console.log(query)
 	    res.render('list', {
 		title: "Gender Distribution | List",
 		rec: list,

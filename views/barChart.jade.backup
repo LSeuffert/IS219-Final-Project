@@ -11,21 +11,20 @@ html
       }
   body
     #wrapper
-      | &#x9;
       script(src='http://d3js.org/d3.v3.min.js', charset='utf=8')
       script.
-        var categories= ['','Accessories', 'Audiophile', 'Camera & Photo', 'Cell Phones', 'Computers','eBook Readers','Gadgets','GPS & Navigation','Home Audio','Office Electronics'];
-          var dollars = [213,209,190,179,156,209,190,179,213,209];
+        var categories= ['', '#{names[0]}', '#{names[1]}', '#{names[2]}', '#{names[3]}', '#{names[4]}', '#{names[5]}', '#{names[6]}', '#{names[7]}', '#{names[8]}', '#{names[9]}'];
+          var dollars= [#{totals[0]}, #{totals[1]}, #{totals[2]}, #{totals[3]}, #{totals[4]}, #{totals[5]}, #{totals[6]}, #{totals[7]}, #{totals[8]}, #{totals[9]}];
           var colors = ['#0000b4','#0082ca','#0094ff','#0d4bcf','#0066AE','#074285','#00187B','#285964','#405F83','#416545']
           var grid = d3.range(25).map(function(i){
           return {'x1':0,'y1':0,'x2':0,'y2':470};
           });
           var tickVals = grid.map(function(d,i){
-          if(i>0){ return i*10; }
+          if(i>0){ return i*(#{max}/10); }
           else if(i===0){ return "100";}
           });
           var xscale = d3.scale.linear()
-          .domain([10,250])
+          .domain([0, #{max}])
           .range([0,722]);
           var yscale = d3.scale.linear()
           .domain([0,categories.length])
@@ -90,5 +89,5 @@ html
           .data(dollars)
           .enter()
           .append('text')
-          .attr({'x':function(d) {return xscale(d)-200; },'y':function(d,i){ return yscale(i)+35; }})
-          .text(function(d){ return d+"$"; }).style({'fill':'#fff','font-size':'14px'});
+          .attr({'x':function(d) {return xscale(d)-100; },'y':function(d,i){ return yscale(i)+35; }})
+          .text(function(d){ return d; }).style({'fill':'#fff','font-size':'14px'});
