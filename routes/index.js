@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var busboy = require('connect-busboy');
-var csv = require('csv');
 var University = mongoose.model('university');
 var helper = require(__dirname + '/helper');
 
@@ -26,11 +25,6 @@ router.get('/upload', function(req, res) {
 
 /****************************** DISPLAY ROUTES *****************************/
 
-router.get('/test', function(req, res) {
-    University.find({'y2013.enroll':true}, {'y2013.total': 1}).sort({'y2013.total': -1}).limit(10).find(function(err, records) {
-	res.send(records);
-    })
-})
 
 /* GET year listing for top enrollement */
 router.get('/most_enrolled', function(req, res) {
@@ -43,27 +37,14 @@ router.get('/most_enrolled', function(req, res) {
 /* GET list for top enrollment of selected year */
 router.get('/most_enrolled/:year', function(req, res) {
     var year = 'y' + req.params.year;
-    var year_sort;
-    var query;
+    var query = {};
+    var year_sort = {};
 
-    switch(req.params.year) {
-    case '2013':
-    	query = {'y2013.enroll': true};
-	year_sort = {'y2013.total': -1};
-	break;
-    case '2012':
-    	query = {'y2012.enroll': true};
-	year_sort = {'y2012.total': -1};
-	break;
-    case '2011':
-    	query = {'y2011.enroll': true};
-	year_sort = {'y2011.total': -1};
-	break;
-    default:
-    	query = {'y2013.enroll': true};
-	year_sort = {'y2013.total': -1};
-    }
+    // set query and options
+    query[year + '.enroll'] = true;
+    year_sort[year + '.total'] = -1;
 
+    // find top ten most enrolled colleges
     University.find(query).sort(year_sort).limit(10).find(
 	function(err, records)
 		 {
@@ -98,22 +79,10 @@ router.get('/gender_distribution/:year/:id', function(req, res) {
 	req.params.id,
 	{},
 	function(err, record) {
-	    var year_record;
-	    switch(req.params.year) {
-	    case '2013':
-		year_record = record.y2013;
-		break;
-	    case '2012':
-		year_record = record.y2012;
-		break;
-	    case '2011':
-		year_record = record.y2011;
-		break;
-	    default:
-		year_record = record.y2013;
-		break;
-	    }
+	    // find relevant year document
+	    var year_record = record['y' + req.params.id];
 
+	    // render page
 	    res.render('pieGraph', {
 		title: 'Gender Distribution | Pie Graph',
 		rec: year_record
@@ -133,21 +102,9 @@ router.get('/gender_distribution', function(req, res) {
 /* GET for gender of selected year */
 router.get('/gender_distribution/:year', function(req, res) {
     var year = req.params.year;
-    var query;
+    var query = {};
 
-    switch(year) {
-    case 2013:
-    	query = {'y2013.enroll': true};
-	break;
-    case 2012:
-    	query = {'y2012.enroll': true};
-	break;
-    case 2011:
-    	query = {'y2011.enroll': true};
-	break;
-    default:
-    	query = {'y2013.enroll': true};
-    }
+    query[year + '.enroll'] = true;
 
     University.find(
 	query,
@@ -266,19 +223,17 @@ router.post('/fileupload/2013/fin', function(req, res) {
 	console.log(id + ' | ' + tuition)
 
 	// set the finance data
-	Schema.findByIdAndUpdate(id, 
-				 {$set: {'y2013.tuition': tuition,'y2013.finance': true}},
-				 function(err) {
-				     if (err) return console.error(err);
-				 })
+	Schema.findByIdAndUpdate(
+	    id, 
+	    {$set: {'y2013.tuition': tuition,'y2013.finance': true}},
+	    function(err) {
+		if (err) return console.error(err);
+	    }
+	)
     })
 })
 
 /******************************* 2012 ************************************/
-
-// is the 2012 characteristics necessary?
-// I do away with for now
-
 
 /* GET upload page for 2012 enrollment data */
 router.get('/upload/2012/enrollment', function(req, res) {
@@ -294,7 +249,7 @@ router.post('/fileupload/2012/enroll', function(req, res) {
 	var id = record.UNITID;
 	console.log(id)
 
-	// increment the data and set to enroll to true
+	// increment the data and set enroll to true
 	Schema.findByIdAndUpdate(id, {$inc: {
 	    'y2012.total': record.EFTOTLT,
 	    'y2012.male': record.EFTOTLM,
@@ -355,7 +310,7 @@ router.post('/fileupload/2011/enroll', function(req, res) {
 	var id = record.UNITID;
 	console.log(id)
 
-	// increment the data and set to enroll to true
+	// increment the data and set enroll to true
 	Schema.findByIdAndUpdate(id, {$inc: {
 	    'y2011.total': record.EFTOTLT,
 	    'y2011.male': record.EFTOTLM,
@@ -379,6 +334,8 @@ router.get('/upload/2011/finance', function(req, res) {
 
 /* POST saves finance data to database */
 router.post('/fileupload/2011/fin', function(req, res) {
+
+    // get records from csv file
     helper.getRecords(req, res, University, 'complete', function(record, Schema) {
 	var id = record.UNITID;
 	var tuition = record.F1B01;
@@ -393,6 +350,11 @@ router.post('/fileupload/2011/fin', function(req, res) {
 	    }
 	)
     })
+})
+
+/* GET final page for upload */
+router.get('/upload/complete', function(req, res) {
+    res.render('complete', {title: 'Upload | Complete'}) // YOU WERE JUST ABOUT TO MAKE A COMPLETED UPLOAD PAGE
 })
 
 module.exports = router;
