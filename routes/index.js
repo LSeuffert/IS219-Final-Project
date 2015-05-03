@@ -7,15 +7,9 @@ var helper = require(__dirname + '/helper');
 
 router.use(busboy());
 
-/**
- * 1) SHOULD VERIFY WHAT WAS UPLOADED -- maybe use events to signify
- * 2) SHOULD MAKE MORE MODULAR -- separate part of this file into another file
- * 3) LISTS AREN'T DRY -- make function with callback for lists
- **/
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'my IPEDS project' });
 });
 
 /* GET upload starting page */
@@ -46,32 +40,11 @@ router.get('/most_enrolled/:year', function(req, res) {
 
     // find top ten most enrolled colleges
     University.find(query).sort(year_sort).limit(10).find(
-	function(err, records)
-		 {
-		     var names = [];
-		     var enrolls = [];
-		     var max = 0;
-		     
-		     for (cntr = 0; cntr < records.length; cntr++) {
-			 names[cntr] = records[cntr]['name'];
-			 enrolls[cntr] = records[cntr][year]['total'];
-			 if ( max < enrolls[cntr] ) {
-			     max = enrolls[cntr];
-			 }
-		     }
-		     
-		     res.render(
-			 'barChart',
-			 {
-			     title: 'placeholder title',
-			     totals: enrolls,
-			     names: names,
-			     max: max
-			 }
-		     )
-		 })
-    }
-)
+	function(err, records){
+	    helper.renderTopTen(res, records, year)
+	}
+    )
+})
 
 /* GET college gender distribution graph */
 router.get('/gender_distribution/:year/:id', function(req, res) {
@@ -84,8 +57,8 @@ router.get('/gender_distribution/:year/:id', function(req, res) {
 
 	    // get percents
 	    var percent = {};
-	    percent.male = Math.round((year_record.male/year_record.total)*1000)/10 + '%';
-	    percent.female = Math.round((year_record.female/year_record.total)*1000)/10 + '%';
+	    percent.male = helper.percent(year_record.total, year_record.male, 1);
+	    percent.female = helper.percent(year_record.total, year_record.female, 1);
 	    console.log(year_record)
 
 	    // render page
@@ -117,7 +90,6 @@ router.get('/gender_distribution/:year', function(req, res) {
 	query,
 	{},
 	function (err, list) {
-	    console.log(query)
 	    res.render('list', {
 		title: "Gender Distribution | List",
 		rec: list,
@@ -362,7 +334,7 @@ router.post('/fileupload/2011/fin', function(req, res) {
 
 /* GET final page for upload */
 router.get('/upload/complete', function(req, res) {
-    res.render('complete', {title: 'Upload | Complete'}) // YOU WERE JUST ABOUT TO MAKE A COMPLETED UPLOAD PAGE
+    res.render('complete', {title: 'Upload | Complete'})
 })
 
 module.exports = router;

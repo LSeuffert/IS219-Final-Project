@@ -1,14 +1,10 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
-  ul
-    li
-      a(href="/upload") upload
-    li
-      a(href="/tuition") Tuition Graph
-    li
-      a(href="/gender_distribution") Gender Chart
-    li
-      a(href="/most_enrolled") Top Ten by Enrollment
+doctype html
+html
+  head
+    title= title
+    link(rel="stylesheet", href="stylesheets/header.css")
+  body
+    include header.jade
+    block content
+      p Welcome to #{title}
+      ul

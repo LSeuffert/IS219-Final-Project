@@ -1,11 +1,13 @@
-doctype html
-html
-  head
-    title= title
-  body
-    - var list = [];
-    each val in rec
-      - list.push(val.y2013.total)
-    script.
-      console.log(#{list[9]})
-      
+ul.page-menu.clearfix
+  li
+    a(href="/") Home
+  li
+    a(href="/upload") Upload
+  li
+    a(href="") Social Stuff
+#header-container
+  #header.clearfix
+    h1.logo
+      a(href='/') IPEDS Project
+    p Having fun?
+

@@ -1,6 +1,8 @@
 doctype html
 html
   head
+    title= title
+    link(rel="stylesheet", href="/stylesheets/header.css")
     style.
       #xaxis .domain {
         fill:none;
@@ -10,6 +12,7 @@ html
         font-size: 12px;
       }
   body
+    include header.jade
     #wrapper
       script(src='http://d3js.org/d3.v3.min.js', charset='utf=8')
       script.

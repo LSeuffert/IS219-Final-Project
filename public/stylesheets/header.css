@@ -1,0 +1,68 @@
+#header-container{
+    padding-top: 20px; 
+    margin: 0px; 
+    text-align: center; 
+    background: #111; 
+    border-bottom: 8px solid #4F90DA;
+}
+
+#header{
+    clear: both; 
+    width: 500px; 
+    margin: 0px auto 0px;
+    padding: 60px 100px 20px;
+}
+
+.page-menu{
+    clear: both; 
+    width: 800px; 
+    margin: auto; 
+    text-transform: uppercase;
+    list-style-type: none;
+}
+.page-menu li{
+    float: left; 
+    margin-right: 10px;
+}
+
+ul.page-menu li.social-links{float: right;}
+
+.page-menu a{
+    color: #595959; 
+    text-transform: uppercase; 
+    font-size: 16px; 
+    margin: 0px 8px;
+}
+
+.page-menu li{
+    margin-top: 10px;
+}
+
+
+ul.page-menu li a:hover{color: #7AC7BD;}
+
+.header-image{
+    margin-bottom: 20px; 
+    text-align: center;
+}
+
+.logo{
+    clear: both; 
+    padding: 0px; 
+    margin: 0px 0px 20px; 
+    font-family: ChunkFiveRegular, Josefin Sans Std Light, Georgia, "Times New Roman", Times, serif; 
+    font-size: 33px; 
+    text-transform: uppercase;
+}
+
+.logo a{
+    color: #fff; 
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
+}
+
+#header p{
+    font-family: "NewCicleFina", Josefin Sans Std Light, Arial, Helvetica, sans-serif; 
+    font-size: 20px; 
+    color: #999; 
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
+}

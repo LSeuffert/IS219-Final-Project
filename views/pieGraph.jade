@@ -1,6 +1,7 @@
 doctype html
 html
   head
+    link(rel="stylesheet", href="/stylesheets/header.css")
     style.
       body {
         font: 10px sans-serif;
@@ -23,6 +24,7 @@ html
         stroke-width: 1.5px;
       }
   body
+    include header.jade
     script(src='http://d3js.org/d3.v3.js')
     script.
       var w = 300,                        //width
