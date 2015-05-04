@@ -17,13 +17,18 @@ router.get('/upload', function(req, res) {
     res.render('upload_landing', { title: 'Upload | Start' })
 })
 
+/* GET page for qunit */
+router.get('/test', function(req, res) {
+    res.render('test', { title: 'Unit tests' })
+})
+
 /****************************** DISPLAY ROUTES *****************************/
 
 
 /* GET year listing for top enrollement */
 router.get('/most_enrolled', function(req, res) {
     res.render('year', {
-	title: "Gender Distribution | Year",
+	title: "Most Enrolled | Year",
 	route: 'most_enrolled'
     })
 })
@@ -63,7 +68,7 @@ router.get('/gender_distribution/:year/:id', function(req, res) {
 
 	    // render page
 	    res.render('pieGraph', {
-		title: 'Gender Distribution | Pie Graph',
+		title: 'Gender Distribution | ' + record.name,
 		rec: year_record,
 		percent: percent
 	    })
@@ -136,15 +141,14 @@ router.get('/tuition/:id', function(req, res) {
     )
 })
 
-/* 
- ********************** ROUTES for 2013 *******************************
- */
+/*********************** ROUTES for 2013 ********************************/
 
 /* GET upload page for 2013 characteristics */
 router.get('/upload/2013/characteristics', function(req, res) {
     res.render('upload', {
 	title: 'Upload | University Characteristics 2013',
-	route: '2013/chars'
+	route: '2013/chars',
+	fileName: 'hd2013.csv'
     })
 })
 
@@ -163,7 +167,8 @@ router.post('/fileupload/2013/chars', function(req, res) {
 router.get('/upload/2013/enrollment', function(req, res) {
     res.render('upload', {
 	title: 'Upload | Enrollment 2013',
-	route: '2013/enroll'
+	route: '2013/enroll',
+	fileName: 'ef2013a.csv'
     })
 })
 
@@ -191,7 +196,8 @@ router.post('/fileupload/2013/enroll', function(req, res) {
 router.get('/upload/2013/finance', function(req, res) {
     res.render('upload', {
 	title: 'Upload | 2013 Finance',
-	route: '2013/fin'
+	route: '2013/fin',
+	fileName: 'f1213_f1a.csv'
     })
 })
 
@@ -219,7 +225,8 @@ router.post('/fileupload/2013/fin', function(req, res) {
 router.get('/upload/2012/enrollment', function(req, res) {
     res.render('upload', {
 	title: 'Upload | Enrollment 2012',
-	route: '2012/enroll'
+	route: '2012/enroll',
+	fileName: 'ef2012a.csv'
     })
 })
 
@@ -247,7 +254,8 @@ router.post('/fileupload/2012/enroll', function(req, res) {
 router.get('/upload/2012/finance', function(req, res) {
     res.render('upload', {
 	title: 'Upload | 2012 Finance',
-	route: '2012/fin'
+	route: '2012/fin',
+	fileName: 'f1112_f1a.csv'
     })
 })
 
@@ -274,13 +282,12 @@ router.post('/fileupload/2012/fin', function(req, res) {
 
 /******************************** 2011 ************************************/
 
-// I have done away with characteristics unless needed
-
 /* GET upload page for 2011 enrollment data */
 router.get('/upload/2011/enrollment', function(req, res) {
     res.render('upload', {
 	title: 'Upload | Enrollment 2011',
-	route: '2011/enroll'
+	route: '2011/enroll',
+	fileName: 'ef2011a.csv'
     })
 })
 
@@ -308,7 +315,8 @@ router.post('/fileupload/2011/enroll', function(req, res) {
 router.get('/upload/2011/finance', function(req, res) {
     res.render('upload', {
 	title: 'Upload | 2011 Finance',
-	route: '2011/fin'
+	route: '2011/fin',
+	fileName: 'f1011_f1a.csv'
     })
 })
 

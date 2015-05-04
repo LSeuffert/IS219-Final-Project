@@ -1,13 +1,18 @@
-ul.page-menu.clearfix
-  li
-    a(href="/") Home
-  li
-    a(href="/upload") Upload
-  li
-    a(href="") Social Stuff
-#header-container
-  #header.clearfix
-    h1.logo
-      a(href='/') IPEDS Project
-    p Having fun?
-
+doctype html
+html
+  head
+    link(rel='stylesheet', href='//code.jquery.com/qunit/qunit-1.18.0.css')
+    link(rel='stylesheet', href='/stylesheets/header.css')
+    script(src='//code.jquery.com/qunit/qunit-1.18.0.js')
+    script(src='/javascripts/recursive.js')
+    script.
+      QUnit.test("recursive tests", function( assert ) {
+      assert.equal(fib(14), 377)
+      assert.equal(fib(1), 1)
+      assert.equal(fib(6), 8)
+      assert.equal(pow(2, 9), 512)
+      assert.equal(pow(134, 0), 1)
+      });
+  body
+    include header.jade
+    #qunit

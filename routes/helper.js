@@ -27,8 +27,6 @@ helper.getRecords = function(req, res, Schema, redir, callback) {
         console.log('file uploaded')
         res.redirect('/upload/' + redir)
     })
-
-    return filename;
 }
 
 
@@ -61,7 +59,7 @@ helper.renderTopTen = function(res, records, year) {
     res.render(
 	'barChart',
 	{
-	    title: 'placeholder title',
+	    title: 'Top Ten Colleges by Enrollment',
 	    totals: enrolls,
 	    names: names,
 	    max: max
