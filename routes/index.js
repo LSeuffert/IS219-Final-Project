@@ -46,6 +46,8 @@ router.get('/most_enrolled/:year', function(req, res) {
     // find top ten most enrolled colleges
     University.find(query).sort(year_sort).limit(10).find(
 	function(err, records){
+	    if (err) console.error(err);
+	    console.log(records)
 	    helper.renderTopTen(res, records, year)
 	}
     )
